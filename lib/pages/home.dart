@@ -41,11 +41,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SearchForm(),
-          ],
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SearchForm(),
+            ],
+          ),
+          padding: EdgeInsets.all(10),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -77,31 +81,41 @@ class _SearchFormState extends State<SearchForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text('行空', style: Theme.of(context).textTheme.headline3),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: _searchTextController,
-              decoration: InputDecoration(hintText: '搜索小说或者作者'),
+          Container(
+            height: 100,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _searchTextController,
+                      decoration: InputDecoration(hintText: '搜索小说或者作者'),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.resolveWith(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.disabled)
+                          ? null
+                          : Colors.white;
+                    }),
+                    backgroundColor: MaterialStateProperty.resolveWith(
+                        (Set<MaterialState> states) {
+                      return states.contains(MaterialState.disabled)
+                          ? null
+                          : Colors.blue;
+                    }),
+                    textStyle:
+                        MaterialStateProperty.all(TextStyle(fontSize: 32)),
+                  ),
+                  onPressed: _searchBook,
+                  child: Text('搜索'),
+                ),
+              ],
             ),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.resolveWith(
-                  (Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled)
-                    ? null
-                    : Colors.white;
-              }),
-              backgroundColor: MaterialStateProperty.resolveWith(
-                  (Set<MaterialState> states) {
-                return states.contains(MaterialState.disabled)
-                    ? null
-                    : Colors.blue;
-              }),
-              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 32)),
-            ),
-            onPressed: _searchBook,
-            child: Text('搜索'),
           ),
           TextButton(
               onPressed: () => {Navigator.of(context).pushNamed('/book/list')},

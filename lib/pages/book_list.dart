@@ -23,34 +23,42 @@ class BookItem extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Card(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Image.network(
               book.url,
               width: 110,
               height: 150,
             ),
-            Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(book.name, style: Theme.of(context).textTheme.headline4),
-                  Text('作者: ' + book.author),
-                ],
+            Expanded(
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(book.name,
+                        style: Theme.of(context).textTheme.headline4),
+                    Text('作者: ' + book.author),
+                  ],
+                ),
+                height: 180,
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               ),
-              height: 180,
             ),
             Container(
               child: TextButton(
                 child: Text("加入书架"),
                 onPressed: null,
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.red),
+                ),
               ),
               height: 180,
+              padding: EdgeInsets.all(10),
             )
           ],
         ),
       ),
+      padding: EdgeInsets.all(10),
     );
   }
 }
