@@ -8,14 +8,14 @@
             "name": "xingkongapp",
             "request": "launch",
             "type": "dart",
-            "args": ["--web-port=8081", "--web-hostname=127.0.0.1"]
+            "args": ["--web-port=8081", "--web-hostname=127.0.0.1", "--web-renderer=html"]
         },
         {
             "name": "xingkongapp (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
-            "args": ["--web-port=8081", "--web-hostname=127.0.0.1"]
+            "args": ["--web-port=8081", "--web-hostname=127.0.0.1", "--web-renderer=html"]
         }
     ]
 }
