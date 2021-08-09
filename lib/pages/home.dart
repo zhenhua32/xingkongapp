@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'book_search.dart' as book_search;
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -118,7 +119,10 @@ class _SearchFormState extends State<SearchForm> {
             ),
           ),
           TextButton(
-              onPressed: () => {Navigator.of(context).pushNamed('/book/list')},
+              onPressed: () => {
+                    Navigator.of(context).pushNamed('/book/list',
+                        arguments: book_search.PageArguments(keyword: "大奉打更人"))
+                  },
               child: Text('书籍'))
         ],
       ),
