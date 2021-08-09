@@ -107,19 +107,20 @@ class _BookPage extends State<BookPage> {
   @override
   void initState() {
     super.initState();
-
-    // final PageArguments arguments =
-    //     ModalRoute.of(context)!.settings.arguments as PageArguments;
-    // books = getBooks(keyword: arguments.keyword);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final PageArguments arguments =
-        ModalRoute.of(context)!.settings.arguments as PageArguments;
-    books = getBooks(keyword: arguments.keyword);
+    var arg = ModalRoute.of(context)!.settings.arguments;
+    if (arg != null) {
+      final PageArguments arguments = arg as PageArguments;
+      books = getBooks(keyword: arguments.keyword);
+    } else {
+      // 没有参数时, 给个空数组
+      books = Future.delayed(Duration.zero, () => []);
+    }
   }
 
   @override
@@ -131,7 +132,8 @@ class _BookPage extends State<BookPage> {
           if (snapshot.hasData) {
             return BookList(books: snapshot.data as List<Book>);
           } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
+            print('error: ${snapshot.error}');
+            return BookList(books: []);
           }
 
           // By default, show a loading spinner.
