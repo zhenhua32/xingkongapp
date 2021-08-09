@@ -69,15 +69,21 @@ class SearchForm extends StatefulWidget {
 
 class _SearchFormState extends State<SearchForm> {
   final _searchTextController = TextEditingController();
+  final GlobalKey<FormState> _searchFormKey = GlobalKey<FormState>();
 
   // 搜索
   void _searchBook() {
-    print(_searchTextController.text);
+    if (_searchFormKey.currentState!.validate()) {
+      Navigator.of(context).pushNamed('/book/list',
+          arguments:
+              book_search.PageArguments(keyword: _searchTextController.text));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _searchFormKey,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -92,6 +98,12 @@ class _SearchFormState extends State<SearchForm> {
                     child: TextFormField(
                       controller: _searchTextController,
                       decoration: InputDecoration(hintText: '搜索小说或者作者'),
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return '请输入小说名或者作者名';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
@@ -123,7 +135,7 @@ class _SearchFormState extends State<SearchForm> {
                     Navigator.of(context).pushNamed('/book/list',
                         arguments: book_search.PageArguments(keyword: "大奉打更人"))
                   },
-              child: Text('书籍'))
+              child: Text('推荐书籍'))
         ],
       ),
     );
